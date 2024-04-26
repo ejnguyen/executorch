@@ -47,25 +47,26 @@ test_cmake_quantization() {
   SITE_PACKAGES="$(${PYTHON_EXECUTABLE} -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')"
   CMAKE_PREFIX_PATH="${SITE_PACKAGES}/torch"
 
-  (rm -rf cmake-out \
-    && mkdir cmake-out \
-    && cd cmake-out \
+  ( mkdir -p cmake-out-q \
+    && cd cmake-out-q \
     && retry cmake -DBUCK2="$BUCK" \
       -DCMAKE_BUILD_TYPE=Release \
       -DEXECUTORCH_BUILD_XNNPACK="$EXECUTORCH_BUILD_XNNPACK" \
+      -DEXECUTORCH_BUILD_QUANTIZED=ON \
+      -DEXECUTORCH_BUILD_QUANTIZED_OPS_AOT=ON \
       -DCMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH" \
       -DPYTHON_EXECUTABLE="$PYTHON_EXECUTABLE" ..)
 
-  cmake --build cmake-out -j4
+  cmake --build cmake-out-q -j4 -- quantized_ops_aot_lib executor_runner
 
   EXT=$(get_shared_lib_ext)
-  SO_LIB="cmake-out/kernels/quantized/libquantized_ops_aot_lib$EXT"
+  SO_LIB="cmake-out-q/kernels/quantized/libquantized_ops_aot_lib$EXT"
 
   echo "Run example.py, shared library $SO_LIB"
   ${PYTHON_EXECUTABLE} -m "examples.xnnpack.quantization.example" --so_library="$SO_LIB" --model_name="$1"
 
   echo 'Running executor_runner'
-  cmake-out/executor_runner --model_path="./${1}_quantized.pte"
+  cmake-out-q/executor_runner --model_path="./${1}_quantized.pte"
   # should give correct result
 
   echo "Removing ${1}_quantized.pte"

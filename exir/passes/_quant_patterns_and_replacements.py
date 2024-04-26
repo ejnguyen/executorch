@@ -25,25 +25,25 @@ __all__ = [
 # TODO: extending an existing library that is defined in OSS might be a bit
 # confusing, we can investigate if it is possible to define a new library
 
-quantized_decomposed_lib.define(
-    "embedding_byte(Tensor weight, Tensor weight_scales, Tensor? weight_zero_points, "
-    "int weight_quant_min, int weight_quant_max, Tensor indices) -> Tensor",
-)
+#quantized_decomposed_lib.define(
+#    "embedding_byte(Tensor weight, Tensor weight_scales, Tensor? weight_zero_points, "
+#    "int weight_quant_min, int weight_quant_max, Tensor indices) -> Tensor",
+#)
 
-quantized_decomposed_lib.define(
-    "embedding_byte.dtype(Tensor weight, Tensor weight_scales, Tensor? weight_zero_points, "
-    "int weight_quant_min, int weight_quant_max, Tensor indices, *, ScalarType? dtype=None) -> Tensor",
-)
+#quantized_decomposed_lib.define(
+#    "embedding_byte.dtype(Tensor weight, Tensor weight_scales, Tensor? weight_zero_points, "
+#    "int weight_quant_min, int weight_quant_max, Tensor indices, *, ScalarType? dtype=None) -> Tensor",
+#)
 
-quantized_decomposed_lib.define(
-    "embedding_byte.out(Tensor weight, Tensor weight_scales, Tensor? weight_zero_points, "
-    "int weight_quant_min, int weight_quant_max, Tensor indices, *, Tensor(a!) out) -> Tensor(a!)",
-)
+#quantized_decomposed_lib.define(
+#    "embedding_byte.out(Tensor weight, Tensor weight_scales, Tensor? weight_zero_points, "
+#    "int weight_quant_min, int weight_quant_max, Tensor indices, *, Tensor(a!) out) -> Tensor(a!)",
+#)
 
-quantized_decomposed_lib.define(
-    "embedding_byte.dtype_out(Tensor weight, Tensor weight_scales, Tensor? weight_zero_points, "
-    "int weight_quant_min, int weight_quant_max, Tensor indices, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)",
-)
+#quantized_decomposed_lib.define(
+#    "embedding_byte.dtype_out(Tensor weight, Tensor weight_scales, Tensor? weight_zero_points, "
+#    "int weight_quant_min, int weight_quant_max, Tensor indices, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)",
+#)
 
 
 def embedding_weight_checks(weight, weight_scales, weight_zero_points):
@@ -103,7 +103,7 @@ def embedding_byte(
     return torch.ops.aten.embedding.default(weight, indices)
 
 
-@impl_abstract("quantized_decomposed::embedding_byte.out")
+#@impl_abstract("quantized_decomposed::embedding_byte.out")
 def embedding_byte_out_meta(
     weight: torch.Tensor,
     weight_scales: torch.Tensor,
@@ -150,7 +150,7 @@ def embedding_byte_dtype(
     return torch.ops.aten.embedding.default(weight, indices)
 
 
-@impl_abstract("quantized_decomposed::embedding_byte.dtype_out")
+#@impl_abstract("quantized_decomposed::embedding_byte.dtype_out")
 def embedding_byte_dtype_out_meta(
     weight: torch.Tensor,
     weight_scales: torch.Tensor,
@@ -182,15 +182,15 @@ quantized_decomposed_lib.define(
     "int weight_quant_min, int weight_quant_max, Tensor indices, *, ScalarType? dtype=None) -> Tensor",
 )
 
-quantized_decomposed_lib.define(
-    "embedding_4bit.out(Tensor weight, Tensor weight_scales, Tensor? weight_zero_points, "
-    "int weight_quant_min, int weight_quant_max, Tensor indices, *, Tensor(a!) out) -> Tensor(a!)",
-)
+#quantized_decomposed_lib.define(
+#    "embedding_4bit.out(Tensor weight, Tensor weight_scales, Tensor? weight_zero_points, "
+#    "int weight_quant_min, int weight_quant_max, Tensor indices, *, Tensor(a!) out) -> Tensor(a!)",
+#)
 
-quantized_decomposed_lib.define(
-    "embedding_4bit.dtype_out(Tensor weight, Tensor weight_scales, Tensor? weight_zero_points, "
-    "int weight_quant_min, int weight_quant_max, Tensor indices, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)",
-)
+#quantized_decomposed_lib.define(
+#    "embedding_4bit.dtype_out(Tensor weight, Tensor weight_scales, Tensor? weight_zero_points, "
+#    "int weight_quant_min, int weight_quant_max, Tensor indices, *, ScalarType? dtype=None, Tensor(a!) out) -> Tensor(a!)",
+#)
 
 
 @impl(quantized_decomposed_lib, "embedding_4bit", "CompositeExplicitAutograd")
@@ -225,7 +225,7 @@ def embedding_4bit(
     return torch.ops.aten.embedding.default(weight, indices)
 
 
-@impl_abstract("quantized_decomposed::embedding_4bit.out")
+#@impl_abstract("quantized_decomposed::embedding_4bit.out")
 def embedding_4bit_out_meta(
     weight: torch.Tensor,
     weight_scales: torch.Tensor,
@@ -278,7 +278,7 @@ def embedding_4bit_dtype(
     return torch.ops.aten.embedding.default(weight, indices)
 
 
-@impl_abstract("quantized_decomposed::embedding_4bit.dtype_out")
+#@impl_abstract("quantized_decomposed::embedding_4bit.dtype_out")
 def embedding_4bit_dtype_out_meta(
     weight: torch.Tensor,
     weight_scales: torch.Tensor,

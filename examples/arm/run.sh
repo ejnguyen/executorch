@@ -58,7 +58,7 @@ function generate_pte_file() {
     # and sccache fails to open a unix domain socket under this directory .
     # SO_LIB=$(buck2 build //kernels/quantized:aot_lib --show-output | grep "buck-out" | cut -d" " -f2)
     # We are using the aot_lib from build_quantization_aot_lib below
-    SO_LIB=$(find -name libquantized_ops_aot_lib.so)
+    SO_LIB=$(find cmake-out-aot-lib -name libquantized_ops_aot_lib.so)
 
     python3 -m examples.arm.aot_arm_compiler --model_name="${model}" ${delegate} --so_library="$SO_LIB" 1>&2
     [[ -f ${pte_file} ]] || { echo "Failed to generate a pte file - ${pte_file}"; exit 1; }
